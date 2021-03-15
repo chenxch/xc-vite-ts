@@ -4,102 +4,127 @@
  * @Date: 2021-03-15 15:43:05
 -->
 <template>
-  <el-aside width="200px" class="saas-aside">
-      <div class="saas-img"></div>
-      <el-scrollbar wrap-class="scrollbar-wrapper"
-        class="saas-menu">
+  <el-aside :width="isCollapse ? '70px' : '200px'" class="saas__aside">
+    <div class="saas__img">
+      <img src="../../assets/images/menu-collapse.png" v-show="isCollapse" />
+      <img src="../../assets/images/menu.png" v-show="!isCollapse" />
+    </div>
+    <el-scrollbar wrap-class="scrollbar-wrapper" class="saas__menu">
       <el-menu
         :default-active="active"
-        background-color="transparent"
+        background-color="#213077"
         text-color="#fff"
         active-text-color="#101945"
         @select="handleSelect"
+        :collapse="isCollapse"
         router
       >
         <el-submenu :index="menu.path" v-for="menu in menuList" :key="menu.id">
-          <template #title><i class="saas-icon" :class="menu.ico"></i>
-          <span>{{menu.name}}</span></template>
+          <template #title
+            ><i class="saas__icon" :class="menu.ico"></i>
+            <span>{{ menu.name }}</span></template
+          >
 
-            <el-menu-item :index="childMenu.path" v-for="childMenu in menu.children" :key="childMenu.id">
-              <span>{{childMenu.name}}</span></el-menu-item>
-        
+          <el-menu-item
+            :index="childMenu.path"
+            v-for="childMenu in menu.children"
+            :key="childMenu.id"
+          >
+            <span>{{ childMenu.name }}</span></el-menu-item
+          >
         </el-submenu>
-
-  
       </el-menu>
-      </el-scrollbar>
-      <div class="saas-fold"></div>
-    </el-aside>
+    </el-scrollbar>
+    <div class="saas__fold">
+      <i
+        class="saas__fold__icon pl20"
+        :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
+        @click="hanldeCollapse"
+      />
+    </div>
+  </el-aside>
 </template>
 
 <script lang="ts">
-import { ref, reactive, defineComponent } from 'vue'
+import { ref, reactive, defineComponent } from "vue";
 export default defineComponent({
-  name: 'HelloWorld',
+  name: "HelloWorld",
   props: {
     msg: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   setup: () => {
-    const active = ref('/home');
+    const active = ref("/home");
+    const isCollapse = ref(false);
     const menuList = reactive([
       {
-       id:1,
-       ico: 'el-icon-message',
-       path: '',
-       name: '监控场景',
-       children: [
-         {
-          id:2,
-          path: '/home',
-          name: '主机监控'
+        id: 1,
+        ico: "el-icon-message",
+        path: "",
+        name: "监控场景",
+        children: [
+          {
+            id: 2,
+            path: "/home",
+            name: "主机监控",
           },
           {
-          id:3,
-          path: '/about',
-          name: '数据监控'
-          }
-       ]
-      }
-    ])
+            id: 3,
+            path: "/about",
+            name: "数据监控",
+          },
+        ],
+      },
+    ]);
     const handleSelect = (index: string) => {
-        active.value = index;
-      }
-    return { menuList, active, handleSelect }
-  }
-})
+      active.value = index;
+    };
+    const hanldeCollapse = () => {
+      isCollapse.value = !isCollapse.value;
+    };
+    return { menuList, active, isCollapse, handleSelect, hanldeCollapse };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
 .saas {
-  &-main {
+  &__main {
     width: 100%;
     height: 100%;
   }
-  &-aside {
+  &__aside {
     height: 100%;
     display: flex;
     flex-direction: column;
     background-color: $--aside-bg-color;
   }
-  &-img {
+  &__img {
     height: 78px;
     // border-bottom: 1px solid red;
   }
-  &-menu {
+  &__menu {
     flex: 1;
+    :deep(.is-horizontal) {
+      display: none !important;
+    }
   }
-  &-fold {
+  &__fold {
     height: 44px;
+    line-height: 44px;
     border-top: 1px solid rgb(255 255 255 / 20%);
+    &__icon {
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
   }
-  &-icon {
+  &__icon {
     padding-left: 9px;
     color: #fff;
-    width: 14px;
-    height: 14px;
+    font-size: 16px;
   }
 }
 :deep(.el-menu) {
@@ -109,25 +134,30 @@ export default defineComponent({
   height: 44px;
   line-height: 44px;
   font-size: $--font-default;
-  >span {
+  > span {
     padding-left: 25px;
   }
 }
-:deep(.el-submenu .el-menu-item){
+:deep(.el-submenu .el-menu-item) {
   height: 44px;
   line-height: 44px;
   font-size: $--font-default;
-  >span{
+  > span {
     padding-left: 20px;
   }
 }
-:deep(.el-menu-item.is-active){
+</style>
+<style lang="scss">
+.el-menu-item.is-active {
   background: linear-gradient(to left, #5384ff, #68daff) !important;
 }
-:deep(.el-menu-item:hover){
+.el-menu-item:hover {
   background-color: transparent !important;
 }
-:deep(.el-submenu__title:hover){
+.el-submenu__title:hover {
   background-color: transparent !important;
+}
+.el-submenu__title i {
+  color: #fff;
 }
 </style>
