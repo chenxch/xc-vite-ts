@@ -87,7 +87,13 @@ export default defineComponent({
     const hanldeCollapse = () => {
       store.commit("setCollapse", !isCollapse.value);
     };
-    return { menuList, active, isCollapse, handleSelect, hanldeCollapse };
+    return {
+      menuList,
+      active,
+      isCollapse,
+      handleSelect,
+      hanldeCollapse,
+    };
   },
 });
 </script>
