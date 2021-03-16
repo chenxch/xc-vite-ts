@@ -14,7 +14,8 @@ export default defineConfig({
   },
   resolve:{
     alias: {
-      "@c": path.resolve(__dirname, "./src/components") // map '@' to './src' 
+      "@": path.resolve(__dirname, "./src"), // map '@' to './src' 
+      "@c": path.resolve(__dirname, "./src/components")
     }
   }
 })

@@ -38,7 +38,7 @@
     <div class="saas__fold">
       <i
         class="saas__fold__icon pl20"
-        :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
+        :class="isCollapse ? 'bo-icon-unfold-right' : 'bo-icon-fold-left'"
         @click="hanldeCollapse"
       />
     </div>
@@ -46,9 +46,11 @@
 </template>
 
 <script lang="ts">
-import { ref, reactive, defineComponent } from "vue";
+import { ref, reactive, defineComponent, computed } from "vue";
+import { useStore } from "vuex";
+
 export default defineComponent({
-  name: "HelloWorld",
+  name: "SiderBar",
   props: {
     msg: {
       type: String,
@@ -56,12 +58,13 @@ export default defineComponent({
     },
   },
   setup: () => {
+    const store = useStore();
     const active = ref("/home");
-    const isCollapse = ref(false);
+    const isCollapse = computed(() => store.state.collapse);
     const menuList = reactive([
       {
         id: 1,
-        ico: "el-icon-message",
+        ico: "bo-icon-saas_default",
         path: "",
         name: "监控场景",
         children: [
@@ -82,7 +85,7 @@ export default defineComponent({
       active.value = index;
     };
     const hanldeCollapse = () => {
-      isCollapse.value = !isCollapse.value;
+      store.commit("setCollapse", !isCollapse.value);
     };
     return { menuList, active, isCollapse, handleSelect, hanldeCollapse };
   },
@@ -103,7 +106,6 @@ export default defineComponent({
   }
   &__img {
     height: 78px;
-    // border-bottom: 1px solid red;
   }
   &__menu {
     flex: 1;
@@ -130,24 +132,35 @@ export default defineComponent({
 :deep(.el-menu) {
   border-right: 0;
 }
-:deep(.el-submenu__title) {
-  height: 44px;
-  line-height: 44px;
-  font-size: $--font-default;
-  > span {
-    padding-left: 25px;
-  }
-}
-:deep(.el-submenu .el-menu-item) {
-  height: 44px;
-  line-height: 44px;
-  font-size: $--font-default;
-  > span {
-    padding-left: 20px;
-  }
-}
 </style>
 <style lang="scss">
+.el-submenu__title {
+  height: 44px !important;
+  line-height: 44px !important;
+  font-size: $--font-default !important;
+  > span {
+    padding-left: 25px !important;
+  }
+}
+.el-menu-item {
+  height: 44px !important;
+  line-height: 44px !important;
+  font-size: $--font-default !important;
+  > span {
+    padding-left: 20px !important;
+  }
+}
+.el-popper.is-light {
+  border: 0 !important;
+}
+.el-submenu .el-menu-item {
+  height: 44px !important;
+  line-height: 44px !important;
+  font-size: $--font-default !important;
+  > span {
+    padding-left: 20px !important;
+  }
+}
 .el-menu-item.is-active {
   background: linear-gradient(to left, #5384ff, #68daff) !important;
 }

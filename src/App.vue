@@ -8,7 +8,9 @@
     <sider-bar></sider-bar>
     <el-container>
       <el-header height="48px">Header</el-header>
-      <el-main><router-view></router-view></el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>

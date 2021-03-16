@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/About.vue')
+    component:  defineAsyncComponent(() => import('../views/About.vue'))
   }
 ]
 
