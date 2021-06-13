@@ -5,53 +5,44 @@
 -->
 <template>
   <div>
-    <el-select
-      v-model="type"
-      placeholder="请选择"
-      class="search__select"
-      size="mini"
-    >
+    <el-select v-model="type" placeholder="请选择" class="search__select" size="mini">
       <el-option
         v-for="item in typeOptions"
         :key="item.value"
         :label="item.label"
         :value="item.value"
         :disabled="item.disabled"
-      >
-      </el-option>
+      ></el-option>
     </el-select>
-    <el-input
-      v-model="text"
-      size="mini"
-      suffix-icon="bo-icon-search"
-      class="search__input"
-    ></el-input>
+    <el-input v-model="text" size="mini" suffix-icon="bo-icon-search" class="search__input"></el-input>
   </div>
 </template>
 
 <script lang="ts">
-import { ref, reactive, defineComponent, computed } from "vue";
-import { useStore } from "vuex";
+import { ref, reactive, defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
-  name: "SearchItem",
+  name: 'SearchItem',
   setup: () => {
-    const store = useStore();
-    const type = ref("host");
-    const text = ref("");
+    const store = useStore()
+    const type = ref('host')
+    const text = ref('')
     const typeOptions = reactive([
       {
-        label: "主机",
-        value: "host",
+        label: '主机',
+        value: 'host',
+        disabled: false
       },
       {
-        label: "网络",
-        value: "network",
-      },
-    ]);
-    return { type, typeOptions, text };
-  },
-});
+        label: '网络',
+        value: 'network',
+        disabled: false
+      }
+    ])
+    return { type, typeOptions, text }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

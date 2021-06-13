@@ -22,23 +22,23 @@
 </template>
 
 <script lang="ts">
-import { ref, reactive, defineComponent, computed } from "vue";
-import { useStore } from "vuex";
-import SearchItem from "./SearchItem.vue";
-import UserItem from "./UserItem.vue";
+import { ref, reactive, defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
+import SearchItem from './SearchItem.vue'
+import UserItem from './UserItem.vue'
 
 export default defineComponent({
-  name: "HeaderBar",
+  name: 'HeaderBar',
   components: {
     SearchItem,
-    UserItem,
+    UserItem
   },
   setup: () => {
-    const store = useStore();
+    const store = useStore()
 
-    return {};
-  },
-});
+    return {}
+  }
+})
 </script>
 
 <style lang="scss" scoped>
