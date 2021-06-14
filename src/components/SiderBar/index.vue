@@ -20,18 +20,14 @@
         router
       >
         <el-submenu :index="menu.path" v-for="menu in menuList" :key="menu.id">
-          <template #title
-            ><i class="saas__icon" :class="menu.ico"></i>
-            <span>{{ menu.name }}</span></template
-          >
+          <template #title>
+            <i class="saas__icon" :class="menu.ico"></i>
+            <span>{{ menu.name }}</span>
+          </template>
 
-          <el-menu-item
-            :index="childMenu.path"
-            v-for="childMenu in menu.children"
-            :key="childMenu.id"
-          >
-            <span>{{ childMenu.name }}</span></el-menu-item
-          >
+          <el-menu-item :index="childMenu.path" v-for="childMenu in menu.children" :key="childMenu.id">
+            <span>{{ childMenu.name }}</span>
+          </el-menu-item>
         </el-submenu>
       </el-menu>
     </el-scrollbar>
@@ -46,56 +42,56 @@
 </template>
 
 <script lang="ts">
-import { ref, reactive, defineComponent, computed } from "vue";
-import { useStore } from "vuex";
+import { ref, reactive, defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
-  name: "SiderBar",
+  name: 'SiderBar',
   props: {
     msg: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   setup: () => {
-    const store = useStore();
-    const active = ref("/home");
-    const isCollapse = computed(() => store.state.collapse);
+    const store = useStore()
+    const active = ref('/home')
+    const isCollapse = computed(() => store.state.collapse)
     const menuList = reactive([
       {
         id: 1,
-        ico: "bo-icon-saas_default",
-        path: "",
-        name: "监控场景",
+        ico: 'bo-icon-saas_default',
+        path: '',
+        name: '监控场景',
         children: [
           {
             id: 2,
-            path: "/home",
-            name: "主机监控",
+            path: '/home',
+            name: '主机监控'
           },
           {
             id: 3,
-            path: "/about",
-            name: "数据监控",
-          },
-        ],
-      },
-    ]);
+            path: '/about',
+            name: '数据监控'
+          }
+        ]
+      }
+    ])
     const handleSelect = (index: string) => {
-      active.value = index;
-    };
+      active.value = index
+    }
     const hanldeCollapse = () => {
-      store.commit("setCollapse", !isCollapse.value);
-    };
+      store.commit('setCollapse', !isCollapse.value)
+    }
     return {
       menuList,
       active,
       isCollapse,
       handleSelect,
-      hanldeCollapse,
-    };
-  },
-});
+      hanldeCollapse
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>
